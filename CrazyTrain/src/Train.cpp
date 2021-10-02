@@ -1,5 +1,6 @@
 #include <string>
 #include <memory>
+#include <iostream>
 
 #include "Train.h"
 #include "TrainFurnace.h"
@@ -10,7 +11,7 @@ std::shared_ptr<TrainFurnace> m_furnace;
 
 void Train::Init(std::shared_ptr<TrainFurnace> furnace)
 {
-	rect = Rectangle {230, Program::GroundHeight - 200, 300, 200};
+	rect = Rectangle {250, Program::GroundHeight - 170, 300, 200};
 	speed = 0;
 	progress = 0;
 	m_furnace = furnace;
@@ -19,7 +20,10 @@ void Train::Init(std::shared_ptr<TrainFurnace> furnace)
 void Train::Update()
 {
 	speed = m_furnace->power;
-	progress += speed;
+	progress += speed * 0.001 * GetFrameTime();
+
+	if (progress >= 1.0)
+		Program::Victory();
 }
 
 void Train::Render()
@@ -29,5 +33,5 @@ void Train::Render()
 
 void Train::RenderProgress()
 {
-	//DrawRectangle(0, 0, progress / Program::ScreenWidth, 50, GRAY);
+	DrawRectangle(0, 0, (progress / 1.0) * Program::ScreenWidth, 50, GRAY);
 }

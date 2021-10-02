@@ -1,6 +1,8 @@
 #include <iostream>
 #include <memory>
 #include <functional>
+#include <format>
+#include <string>
 
 #include "raylib.h"
 #include "raymath.h"
@@ -18,15 +20,18 @@ std::shared_ptr<Train> m_train;
 std::shared_ptr<TrainFurnace> m_trainFurnace;
 
 std::shared_ptr<void> m_currentInteractiveObject;
+bool m_showVictoryScreen;
+bool m_showDefeatScreen;
+
+float m_raceTime;
 
 void Program::StartProgram()
 {
-
     InitWindow(ScreenWidth, ScreenHeight, "CrazyTrain");
     SetTargetFPS(0);
 
     CreateGameObjects();
-    CreateInputStates();
+    PushPlayerInput();
 }
 
 void Program::CreateGameObjects()
@@ -41,15 +46,17 @@ void Program::CreateGameObjects()
     m_train->Init(m_trainFurnace);
 }
 
-void Program::CreateInputStates()
+void Program::PushPlayerInput()
 {
     auto playerInputState = InputManager::CreateState("PlayerInputState");
     auto moveRightAction = InputManager::CreateHoldAction(KEY_D, []() { m_player->Move(1); });
     auto moveLeftAction = InputManager::CreateHoldAction(KEY_A, []() { m_player->Move(-1); });
     auto interactAction = InputManager::CreateDownAction(KEY_E, []() { CheckInteraction(); });
+    auto restartGameAction = InputManager::CreateDownAction(KEY_R, []() { RestartGame(); });
     playerInputState.AddAction(moveRightAction);
     playerInputState.AddAction(moveLeftAction);
     playerInputState.AddAction(interactAction);
+    playerInputState.AddAction(restartGameAction);
     InputManager::PushState(playerInputState);
 }
 
@@ -63,6 +70,9 @@ void Program::UpdateProgram()
 
         m_trainFurnace->Update();
         m_train->Update();
+
+        if (!m_showVictoryScreen && !m_showDefeatScreen)
+            m_raceTime += GetFrameTime();
 
         //std::cout << "Power: " << m_trainFurnace->power << "\n";
         Render();
@@ -98,12 +108,29 @@ void Program::Render()
 
     ClearBackground(RAYWHITE);
     m_train->Render();
+    m_train->RenderProgress();
     m_coalDeposit->Render();
     m_trainFurnace->Render();
-    
+    m_trainFurnace->RenderPowerBar();
+
     m_player->Render();
     if (m_player->showInteractPopup)
         m_player->RenderInteractPopup();
+    
+    DrawText(std::format("Time: {:.2f}", m_raceTime).c_str(), ScreenWidth / 2 - 70, ScreenHeight / 2 - 100, 30, BLACK);
+
+    if (m_showVictoryScreen)
+    {
+        DrawRectangle(0, 0, ScreenWidth, ScreenHeight, SKYBLUE);
+        DrawText("VICTORY!", ScreenWidth / 2 - 130, ScreenHeight / 2 - 60, 50, WHITE);
+        DrawText(std::format("Time: {:.2f}", m_raceTime).c_str(), ScreenWidth / 2 - 100, ScreenHeight / 2, 40, WHITE);
+    }
+    else if (m_showDefeatScreen)
+    {
+        DrawRectangle(0, 0, ScreenWidth, ScreenHeight, DARKBLUE);
+        DrawText("boom...", ScreenWidth / 2 - 130, ScreenHeight / 2 - 60, 50, BLACK);
+        DrawText("(insert cool explosion here)", 0, 0, 10, BLACK);
+    }
 
     EndDrawing();
 }
@@ -115,8 +142,28 @@ void Program::CleanupProgram()
 
 void Program::RestartGame()
 {
+    m_raceTime = 0;
+    
     m_player->Init();
     m_coalDeposit->Init();
     m_trainFurnace->Init();
     m_train->Init(m_trainFurnace);
+
+    m_showVictoryScreen = false;
+    m_showDefeatScreen = false;
+}
+
+void Program::Victory()
+{
+    if (m_showVictoryScreen)
+        return;
+
+    m_showVictoryScreen = true;
+}
+void Program::Defeat() 
+{
+    if (m_showDefeatScreen)
+        return;
+
+    m_showDefeatScreen = true;
 }

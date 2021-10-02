@@ -10,7 +10,7 @@ public:
 	void RenderProgress();
 
 	Rectangle rect;
-	std::string string;
+	std::string spritePath;
 
 	float speed;
 	float progress;

@@ -2,6 +2,7 @@
 
 #include "Player.h"
 #include "raylib.h"
+#include "raymath.h"
 #include "Program.h"
 
 void Player::Init()
@@ -14,6 +15,7 @@ void Player::Init()
 void Player::Move(int direction)
 {
 	rect.x += direction * speed * GetFrameTime();
+	rect.x = Clamp(rect.x, 250, 520);
 }
 
 void Player::LoadCoal()

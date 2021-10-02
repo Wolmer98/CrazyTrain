@@ -43,6 +43,7 @@ InputManager::InputAction InputManager::CreateHoldAction(int key, std::function<
 void InputManager::PushState(InputManager::InputState inputState)
 {
 	m_inputStates.emplace_back(inputState);
+	std::cout << "PUSHED: " << inputState.name << "\n";
 }
 
 void InputManager::PopState()

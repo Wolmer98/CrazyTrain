@@ -5,7 +5,7 @@
 
 void CoalDeposit::Init()
 {
-	rect = Rectangle{ 200, Program::GroundHeight - 20, 50, 50 };
+	rect = Rectangle{ 250, Program::GroundHeight - 20, 50, 50 };
 }
 
 void CoalDeposit::Render()

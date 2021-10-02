@@ -8,10 +8,11 @@ public:
 	void LoadCoal(int amount);
 	void Update();
 	void Render();
+	void RenderPowerBar();
 
 	int loadedCoal;
 	float power;
-	const float powerLimit = 1000;
+	const float powerLimit = 100;
 	Rectangle rect;
 	std::string spritePath;
 };

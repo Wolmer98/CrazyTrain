@@ -9,11 +9,15 @@ namespace Program
 
 	void StartProgram();
 	void CreateGameObjects();
-	void CreateInputStates();
+	void PushPlayerInput();
 	void UpdateProgram();
 	void CheckInteraction();
 	std::shared_ptr<void> GetInteractiveObject();
 	void CleanupProgram();
 	void Render();
 	void RestartGame();
+
+	// Garbage function names.
+	void Victory();
+	void Defeat();
 }
