@@ -10,5 +10,5 @@ void CoalDeposit::Init()
 
 void CoalDeposit::Render()
 {
-	DrawRectangleRec(rect, BLACK);
+	//DrawRectangleRec(rect, BLACK);
 }

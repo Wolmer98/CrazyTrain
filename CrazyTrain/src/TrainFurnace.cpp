@@ -42,11 +42,10 @@ void TrainFurnace::Update()
 
 void TrainFurnace::Render()
 {
-	DrawRectangleRec(rect, GREEN);
 	DrawText(std::to_string(loadedCoal).c_str(), rect.x + 15, rect.y - 30, 18, BLACK);
 }
 
 void TrainFurnace::RenderPowerBar()
 {
-	DrawRectangle(0, Program::ScreenHeight - 30, (power / powerLimit) * Program::ScreenWidth, 30, RED);
+	DrawRectangle(0, Program::ScreenHeight - 18, (power / powerLimit) * Program::ScreenWidth, 15, RED);
 }

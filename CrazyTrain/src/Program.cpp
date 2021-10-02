@@ -50,11 +50,15 @@ void Program::PushPlayerInput()
 {
     auto playerInputState = InputManager::CreateState("PlayerInputState");
     auto moveRightAction = InputManager::CreateHoldAction(KEY_D, []() { m_player->Move(1); });
+    auto moveRightArrowAction = InputManager::CreateHoldAction(KEY_RIGHT, []() { m_player->Move(1); });
     auto moveLeftAction = InputManager::CreateHoldAction(KEY_A, []() { m_player->Move(-1); });
-    auto interactAction = InputManager::CreateDownAction(KEY_E, []() { CheckInteraction(); });
+    auto moveLeftArrowAction = InputManager::CreateHoldAction(KEY_LEFT, []() { m_player->Move(-1); });
+    auto interactAction = InputManager::CreateDownAction(KEY_SPACE, []() { CheckInteraction(); });
     auto restartGameAction = InputManager::CreateDownAction(KEY_R, []() { RestartGame(); });
     playerInputState.AddAction(moveRightAction);
+    playerInputState.AddAction(moveRightArrowAction);
     playerInputState.AddAction(moveLeftAction);
+    playerInputState.AddAction(moveLeftArrowAction);
     playerInputState.AddAction(interactAction);
     playerInputState.AddAction(restartGameAction);
     InputManager::PushState(playerInputState);
@@ -117,20 +121,20 @@ void Program::Render()
     if (m_player->showInteractPopup)
         m_player->RenderInteractPopup();
     
-    DrawText(std::format("Time: {:.2f}", m_raceTime).c_str(), ScreenWidth / 2 - 70, ScreenHeight / 2 - 100, 30, BLACK);
+    DrawText(std::format("Time: {:.2f}", m_raceTime).c_str(), ScreenWidth / 2 - 90, ScreenHeight / 2 - 120, 30, BLACK);
 
     if (m_showVictoryScreen)
     {
-        DrawRectangle(0, 0, ScreenWidth, ScreenHeight, SKYBLUE);
-        DrawText("VICTORY!", ScreenWidth / 2 - 130, ScreenHeight / 2 - 60, 50, WHITE);
+        DrawRectangle(0, 0, ScreenWidth, ScreenHeight, BLUE);
+        DrawText("FINISH!", ScreenWidth / 2 - 130, ScreenHeight / 2 - 60, 50, WHITE);
         DrawText(std::format("Time: {:.2f}", m_raceTime).c_str(), ScreenWidth / 2 - 100, ScreenHeight / 2, 40, WHITE);
-        DrawText("Press R to restart", ScreenWidth / 2 - 130, ScreenHeight - 60, 30, WHITE);
+        DrawText("Press R to play again", ScreenWidth / 2 - 130, ScreenHeight - 60, 30, WHITE);
     }
     else if (m_showDefeatScreen)
     {
         DrawRectangle(0, 0, ScreenWidth, ScreenHeight, DARKBLUE);
         DrawText("boom...", ScreenWidth / 2 - 130, ScreenHeight / 2 - 60, 50, BLACK);
-        DrawText("(insert cool explosion here)", 0, 0, 10, BLACK);
+        DrawText("(insert cool explosion here)", 0, 0, 20, BLACK);
         DrawText("Press R to restart", ScreenWidth / 2 - 130, ScreenHeight - 60, 30, BLACK);
     }
 
