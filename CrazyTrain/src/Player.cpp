@@ -35,5 +35,5 @@ void Player::Render()
 
 void Player::RenderInteractPopup()
 {
-	DrawText("E", rect.x + rect.width / 2 - 5, rect.y - 40, 20, BLACK);
+	DrawText("E", rect.x + rect.width / 2 - 5, rect.y - 30, 30, WHITE);
 }

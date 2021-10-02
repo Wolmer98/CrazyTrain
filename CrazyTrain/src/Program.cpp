@@ -124,12 +124,14 @@ void Program::Render()
         DrawRectangle(0, 0, ScreenWidth, ScreenHeight, SKYBLUE);
         DrawText("VICTORY!", ScreenWidth / 2 - 130, ScreenHeight / 2 - 60, 50, WHITE);
         DrawText(std::format("Time: {:.2f}", m_raceTime).c_str(), ScreenWidth / 2 - 100, ScreenHeight / 2, 40, WHITE);
+        DrawText("Press R to restart", ScreenWidth / 2 - 130, ScreenHeight - 60, 30, WHITE);
     }
     else if (m_showDefeatScreen)
     {
         DrawRectangle(0, 0, ScreenWidth, ScreenHeight, DARKBLUE);
         DrawText("boom...", ScreenWidth / 2 - 130, ScreenHeight / 2 - 60, 50, BLACK);
         DrawText("(insert cool explosion here)", 0, 0, 10, BLACK);
+        DrawText("Press R to restart", ScreenWidth / 2 - 130, ScreenHeight - 60, 30, BLACK);
     }
 
     EndDrawing();

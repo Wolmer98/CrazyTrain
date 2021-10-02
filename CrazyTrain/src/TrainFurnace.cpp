@@ -48,5 +48,5 @@ void TrainFurnace::Render()
 
 void TrainFurnace::RenderPowerBar()
 {
-	DrawRectangle(0, Program::ScreenHeight - 50, (power / powerLimit) * Program::ScreenWidth, 50, RED);
+	DrawRectangle(0, Program::ScreenHeight - 30, (power / powerLimit) * Program::ScreenWidth, 30, RED);
 }

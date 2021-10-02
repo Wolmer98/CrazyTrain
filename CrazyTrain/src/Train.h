@@ -10,7 +10,8 @@ public:
 	void RenderProgress();
 
 	Rectangle rect;
-	std::string spritePath;
+	std::string trainSpritePath;
+	std::string trainWheelSpritePath;
 
 	float speed;
 	float progress;
