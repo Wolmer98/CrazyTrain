@@ -25,10 +25,16 @@ bool m_showDefeatScreen;
 
 float m_raceTime;
 
+Music m_music;
+
 void Program::StartProgram()
 {
     InitWindow(ScreenWidth, ScreenHeight, "CrazyTrain");
     SetTargetFPS(0);
+
+    InitAudioDevice();
+    m_music = LoadMusicStream("resources/backgroundMusic.wav");
+    PlayMusicStream(m_music);
 
     CreateGameObjects();
     PushPlayerInput();
@@ -68,6 +74,8 @@ void Program::UpdateProgram()
 {
     while (!WindowShouldClose())
     {
+        UpdateMusicStream(m_music);
+
         InputManager::PollInput();
         m_currentInteractiveObject = GetInteractiveObject();
         m_player->showInteractPopup = m_currentInteractiveObject != nullptr;
@@ -143,6 +151,8 @@ void Program::Render()
 
 void Program::CleanupProgram()
 {
+    UnloadMusicStream(m_music);
+    CloseAudioDevice();
     CloseWindow();
 }
 
