@@ -146,15 +146,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\CoalDeposit.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\Program.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\TrainFurnace.cpp" />
+    <ClCompile Include="src\Train.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\CoalDeposit.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\InputManager.h" />
     <ClInclude Include="src\Program.h" />
+    <ClInclude Include="src\TrainFurnace.h" />
+    <ClInclude Include="src\Train.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
